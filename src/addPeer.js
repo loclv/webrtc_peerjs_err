@@ -1,19 +1,13 @@
 import playVideo from './playVideo';
 import openStream from './openStream';
 import getPeerId from './getPeerId';
+import peerServerConf from './peerServerConf';
 import Peer from 'peerjs';
 
 const peerId = getPeerId();
 const peerId2 = getPeerId();
 
 // https://github.com/peers/peerjs-server
-// http://127.0.0.1:9000/peerjs/myapp
-
-const peerConf = {
-    host: 'localhost',
-    port: 9000,
-    path: '/peerjs/myapp'
-}
 
 console.log(peerId);
 
@@ -23,8 +17,8 @@ function addPeer() {
         playVideo(stream, 'localStream');
 
         // https://www.npmjs.com/package/peerjs
-        const peer = new Peer(peerId, peerConf);
-        const peer2 = new Peer(peerId2, peerConf);
+        const peer = new Peer(peerId, peerServerConf);
+        const peer2 = new Peer(peerId2, peerServerConf);
 
         console.log(peer);
 
