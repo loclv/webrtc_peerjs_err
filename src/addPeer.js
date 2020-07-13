@@ -3,13 +3,12 @@ import openStream from './openStream';
 import getPeerId from './getPeerId';
 import peerServerConf from './peerServerConf';
 import Peer from 'peerjs';
+import $ from 'jquery';
 
 const peerId = getPeerId();
 const peerId2 = getPeerId();
 
-// https://github.com/peers/peerjs-server
 
-console.log(peerId);
 
 function addPeer() {
     openStream()
@@ -18,9 +17,6 @@ function addPeer() {
 
         // https://www.npmjs.com/package/peerjs
         const peer = new Peer(peerId, peerServerConf);
-        const peer2 = new Peer(peerId2, peerServerConf);
-
-        console.log(peer);
 
         // Connect
         const conn = peer.connect(peerId2);
@@ -29,15 +25,19 @@ function addPeer() {
         });
 
         // Receive
-        peer2.on('connection', (conn) => {
+        peer.on('connection', (conn) => {
             conn.on('data', (data) => {
-              // Will print 'hi!'
-              console.log(data);
+                // Will print 'hi!'
+                console.log(data);
             });
             conn.on('open', () => {
-              conn.send('hello!');
+                conn.send('hello!');
             });
-          });
+        });
+
+        peer.on('open', id => {
+            $('#my-peer-id').append(id);
+        });
     })
     .catch(error => console.log(error));
 }
