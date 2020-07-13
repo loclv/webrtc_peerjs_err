@@ -5,41 +5,41 @@ import peerServerConf from './peerServerConf';
 import Peer from 'peerjs';
 import $ from 'jquery';
 
-const peerId = getPeerId();
-const peerId2 = getPeerId();
-
-
-
 function addPeer() {
-    openStream()
-    .then(stream => {
-        playVideo(stream, 'localStream');
+    const peerId = getPeerId();
 
-        // https://www.npmjs.com/package/peerjs
-        const peer = new Peer(peerId, peerServerConf);
+    // https://www.npmjs.com/package/peerjs
+    const peer = new Peer(peerId, peerServerConf);
 
-        // Connect
-        const conn = peer.connect(peerId2);
-        conn.on('open', () => {
-            conn.send('hi!');
-        });
+    peer.on('open', id => {
+        $('#my-peer-id').append(id);
+    });
 
-        // Receive
-        peer.on('connection', (conn) => {
-            conn.on('data', (data) => {
-                // Will print 'hi!'
-                console.log(data);
+    // caller
+    $('#btnCall').click(() => {
+        const friendId = $('#txtFriendId').val();
+        openStream()
+        .then(stream => {
+            playVideo(stream, 'localStream');
+            const call = peer.call(friendId, stream);
+            call.on('stream', remoteStream => {
+                playVideo(remoteStream, 'friendStream');
             });
-            conn.on('open', () => {
-                conn.send('hello!');
-            });
-        });
+        })
+        .catch(error => console.log(error));
+    });
 
-        peer.on('open', id => {
-            $('#my-peer-id').append(id);
+    // answer
+    peer.on('call', call => {
+        openStream()
+        .then(stream => {
+            playVideo(stream, 'localStream');
+            call.answer(stream);
+            call.on('stream', remoteStream => {
+                playVideo(remoteStream, 'friendStream');
+            });
         });
     })
-    .catch(error => console.log(error));
 }
 
 export default addPeer;

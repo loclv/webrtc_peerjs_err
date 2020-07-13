@@ -4,18 +4,19 @@
     </head>
     <body>
         <h1>Test</h1>
-        <h3 id="my-peer-id">My peer id:</h3>
+        <h3 id="my-peer-id">My peer id: </h3>
+
         <h4>My stream</h4>
         <video id='localStream' width="300" controls></video>
+
         <br/><br/>
         <h4>Friend's stream</h4>
         <video id='friendStream' width="300" controls></video>
+
         <br/><br/>
-        <textarea id="mySignalTxt" rows="3" cols="32"></textarea>
+        <input id="txtFriendId" type="text" placeholder="Your friend's peer id"></input>
         <br/><br/>
-        <input id="friendSignal" type="text" placeholder="Your friend's signal"></input>
-        <br/><br/>
-        <button id="connectBtn">Connect</button>
+        <button id="btnCall">Call by id</button>
     </body>
 
     <script src="main.js"></script>
