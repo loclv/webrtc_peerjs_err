@@ -38,7 +38,8 @@ function addPeer() {
             call.on('stream', remoteStream => {
                 playVideo(remoteStream, 'friendStream');
             });
-        });
+        })
+        .catch(error => console.log(error));
     })
 }
 
