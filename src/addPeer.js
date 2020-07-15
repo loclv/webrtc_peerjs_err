@@ -4,6 +4,9 @@ import getPeerId from './getPeerId';
 import peerServerConf from './peerServerConf';
 import Peer from 'peerjs';
 import $ from 'jquery';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000/');
 
 function addPeer() {
     const peerId = getPeerId();
