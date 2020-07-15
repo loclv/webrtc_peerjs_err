@@ -1,6 +1,8 @@
-# webrtc demo
+# Webrtc demo
 
-webrtc demo using webpack, peerjs
+webrtc demo using `webpack`, `peerjs`, `socket.io`.
+
+`socket.io` for signaling server.
 
 ## Compile frontend
 
