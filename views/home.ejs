@@ -4,19 +4,32 @@
     </head>
     <body>
         <h1>Test</h1>
-        <h3 id="my-peer-id">My peer id: </h3>
 
-        <h4>My stream</h4>
-        <video id='localStream' width="300" controls></video>
+        <div id="div-chat">
+            <p>Online user:</p>
+            <ul id="ulUser">
+            </ul>
 
-        <br/><br/>
-        <h4>Friend's stream</h4>
-        <video id='friendStream' width="300" controls></video>
+            <h3 id="my-peer-id">My peer id: </h3>
 
-        <br/><br/>
-        <input id="txtFriendId" type="text" placeholder="Your friend's peer id"></input>
-        <br/><br/>
-        <button id="btnCall">Call by id</button>
+            <h4>My stream</h4>
+            <video id='localStream' width="300" controls></video>
+
+            <br/><br/>
+            <h4>Friend's stream</h4>
+            <video id='friendStream' width="300" controls></video>
+
+            <br/><br/>
+            <input id="txtFriendId" type="text" placeholder="Your friend's peer id"></input>
+            <br/><br/>
+            <button id="btnCall">Call by id</button>
+        </div>
+
+        <div id="div-dang-ky">
+            <br /><br />
+            <input type="text" id="txtUsername" placeholder="Enter your username">
+            <button id="btnSignUp">Sign Up</button>
+        </div>
     </body>
 
     <script src="main.js"></script>
