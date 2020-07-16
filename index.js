@@ -1,11 +1,10 @@
 const express = require('express');
-const { ExpressPeerServer } = require('peer');
-
+const createPeerServer = require('./peer');
 const app = express();
 const http = require('http');
 
-const socketServer = require('http').createServer(app);
-var io = require('socket.io')(socketServer);
+const socketServer = http.createServer(app);
+const io = require('socket.io')(socketServer);
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -14,17 +13,7 @@ app.use(express.static('dist'));
 
 app.get('/', (req, res) => res.render('home'));
 
-// https://github.com/peers/peerjs-server
-
-const server = http.createServer(app);
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  path: '/myapp'
-});
-
-app.use('/peerjs', peerServer);
-
-server.listen(9000);
+createPeerServer(app, http);
 
 // socket
 
