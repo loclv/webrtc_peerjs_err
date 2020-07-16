@@ -4,9 +4,7 @@ import getPeerId from './getPeerId';
 import peerServerConf from './peerServerConf';
 import Peer from 'peerjs';
 import $ from 'jquery';
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:3000/');
+import socket from './socket';
 
 function addPeer() {
     const peerId = getPeerId();
@@ -16,6 +14,10 @@ function addPeer() {
 
     peer.on('open', id => {
         $('#my-peer-id').append(id);
+        $('#btnSignUp').click(() => {
+            const name = $('#txtUsername').val();
+            socket.emit('USER_REGISTER', { name: name, peerId: id });
+        });
     });
 
     // caller
@@ -26,7 +28,7 @@ function addPeer() {
             playVideo(stream, 'localStream');
             const call = peer.call(friendId, stream);
             call.on('stream', remoteStream => {
-                playVideo(remoteStream, 'friendStream');
+                playVideo(remoteStream, 'remoteStream');
             });
         })
         .catch(error => console.log(error));
@@ -39,11 +41,11 @@ function addPeer() {
             playVideo(stream, 'localStream');
             call.answer(stream);
             call.on('stream', remoteStream => {
-                playVideo(remoteStream, 'friendStream');
+                playVideo(remoteStream, 'remoteStream');
             });
         })
         .catch(error => console.log(error));
-    })
+    });
 }
 
 export default addPeer;

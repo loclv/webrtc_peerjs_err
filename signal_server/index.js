@@ -12,7 +12,7 @@ io.on('connection', socket => {
 
         userArr.push(user);
         socket.emit('USER_LIST_UPDATE', userArr);
-        socket.broadcast.emit('NEW_USER', user);
+        socket.broadcast.emit('NEW_USER_ONLINE', user);
     });
 
     socket.on('disconnect', () => {
