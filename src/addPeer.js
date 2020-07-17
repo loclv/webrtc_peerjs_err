@@ -23,15 +23,7 @@ function addPeer() {
     // caller
     $('#btnCall').click(() => {
         const friendId = $('#txtFriendId').val();
-        openStream()
-        .then(stream => {
-            playVideo(stream, 'localStream');
-            const call = peer.call(friendId, stream);
-            call.on('stream', remoteStream => {
-                playVideo(remoteStream, 'remoteStream');
-            });
-        })
-        .catch(error => console.log(error));
+        handleCall(peer, friendId);
     });
 
     // answer
@@ -45,6 +37,18 @@ function answer(call) {
     .then(stream => {
         playVideo(stream, 'localStream');
         call.answer(stream);
+        call.on('stream', remoteStream => {
+            playVideo(remoteStream, 'remoteStream');
+        });
+    })
+    .catch(error => console.log(error));
+}
+
+function handleCall(peer, friendId) {
+    openStream()
+    .then(stream => {
+        playVideo(stream, 'localStream');
+        const call = peer.call(friendId, stream);
         call.on('stream', remoteStream => {
             playVideo(remoteStream, 'remoteStream');
         });
