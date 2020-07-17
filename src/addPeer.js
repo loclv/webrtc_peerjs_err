@@ -36,16 +36,20 @@ function addPeer() {
 
     // answer
     peer.on('call', call => {
-        openStream()
-        .then(stream => {
-            playVideo(stream, 'localStream');
-            call.answer(stream);
-            call.on('stream', remoteStream => {
-                playVideo(remoteStream, 'remoteStream');
-            });
-        })
-        .catch(error => console.log(error));
+        answer(call);
     });
+}
+
+function answer(call) {
+    openStream()
+    .then(stream => {
+        playVideo(stream, 'localStream');
+        call.answer(stream);
+        call.on('stream', remoteStream => {
+            playVideo(remoteStream, 'remoteStream');
+        });
+    })
+    .catch(error => console.log(error));
 }
 
 export default addPeer;
