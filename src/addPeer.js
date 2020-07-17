@@ -6,6 +6,11 @@ import Peer from 'peerjs';
 import $ from 'jquery';
 import socket from './socket';
 
+function signUp(id) {
+    const name = $('#txtUsername').val();
+    socket.emit('USER_REGISTER', { name: name, peerId: id });
+}
+
 function addPeer() {
     const peerId = getPeerId();
 
@@ -15,8 +20,13 @@ function addPeer() {
     peer.on('open', id => {
         $('#my-peer-id').append(id);
         $('#btnSignUp').click(() => {
-            const name = $('#txtUsername').val();
-            socket.emit('USER_REGISTER', { name: name, peerId: id });
+            signUp(id);
+        });
+        $('#txtUsername').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+                signUp(id);
+            }
         });
     });
 
