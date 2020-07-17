@@ -20,15 +20,14 @@ function addPeer() {
         });
     });
 
-    // caller
-    $('#btnCall').click(() => {
-        const friendId = $('#txtFriendId').val();
-        handleCall(peer, friendId);
-    });
-
     // answer
     peer.on('call', call => {
         answer(call);
+    });
+
+    $('#ulUser').on('click', 'li', function() {
+        const friendId = $(this).attr('id');
+        handleCall(peer, friendId);
     });
 }
 
